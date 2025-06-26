@@ -22,8 +22,8 @@ class CatalogView(ListView):
             queryset = queryset.filter(category__slug__in =category_slugs)
         if size_names:
             queryset = queryset.filter(
-                Q(size__names__in=size_names) & Q(sizes__clothingitemsize__available=True)
-            )
+                Q(sizes__name__in=size_names) & Q(sizes__clothingitemsize__available=True)
+            ).distinct()
         if min_price:
             queryset = queryset.filter(price__gte=min_price)
         if max_price:
@@ -46,5 +46,5 @@ class ClothingItemDetailView(DetailView):
     model = ClothingItem
     template_name = 'main/product/detail.html'
     context_object_name = 'clothing_item'
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
+    slug_field = 'slug' #тобто ми шукаємо об'єкт в моделі через поле яке ми присвоїли цій змінній
+    slug_url_kwarg = 'slug'# а тут ми вказуєм яке значення цього поля ми шукаємо(його ми витягнули з url ,тут ми вказаи як цей атрбут в посиланні має називатися)
