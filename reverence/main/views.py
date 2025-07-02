@@ -1,7 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from .models import ClothingItem, Category, Size
+from .models import ClothingItem, Category, Size, ClothingItemSize
 from django.db.models import Q 
 from django.views.generic import ListView , DetailView
 # Create your views here.
@@ -48,3 +48,10 @@ class ClothingItemDetailView(DetailView):
     context_object_name = 'clothing_item'
     slug_field = 'slug' #тобто ми шукаємо об'єкт в моделі через поле яке ми присвоїли цій змінній
     slug_url_kwarg = 'slug'# а тут ми вказуєм яке значення цього поля ми шукаємо(його ми витягнули з url ,тут ми вказаи як цей атрбут в посиланні має називатися)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        clothing_item =self.object
+        available_sizes = ClothingItemSize.objects.filter(clothing_item= clothing_item, available = True)
+        context['available_sizes'] = available_sizes
+        return context
