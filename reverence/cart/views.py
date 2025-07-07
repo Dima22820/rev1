@@ -38,3 +38,22 @@ def cart_remove(request ,item_id):
     clothing_item =get_object_or_404(ClothingItem, id= item_id)
     cart.remove(clothing_item)
     return redirect('cart:cart_detail')
+
+class CartUpdateView(View):
+    def post(self,request,item_id):
+        cart = Cart(request)
+        quantity = request.POST.get('quantity', 1)
+        try:
+            quantity = int(quantity)
+            if quantity < 1 :
+                quantity =1
+        except ValueError:
+            quantity =1
+        clothing_item = get_object_or_404(ClothingItem , id = item_id)  
+
+        if quantity>0:
+            cart.add(clothing_item , cart.cart[str(item_id)]['size'], quantity)
+        else:
+            cart.remove(clothing_item)
+        
+        return redirect('cart:cart_detail')

@@ -38,7 +38,7 @@ class Cart:
     
     def __iter__(self):
         item_ids = self.cart.keys()
-        items = ClothingItem.objects.filter(id_in=item_ids)
+        items = ClothingItem.objects.filter(id__in=item_ids)
         for item in items:
             total_price = item.get_price_with_discount()
             quantity = self.cart[str(item.id)]['quantity']
