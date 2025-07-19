@@ -6,7 +6,7 @@
 {% block content %}
     <h1 class="rev-head text-uppercase" id="reverence-title">Reverence interlude - ALL</h1>
     <div class="catalog d-flex">
-        <form action="{% url 'main:catalog' %}" method="get" class="sidebar" id="filter-form">
+        <form action="{% url "main:catalog" %}" method="get" class="sidebar" id="filter-form">
             <h4 class="price-head">Price Range:</h4>
             <div class="price-range d-flex justify-content-between">
                 <input type="number" name="min_price" id="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}" oninput="debounceApplyFilters()">
@@ -38,7 +38,7 @@
             <div class="card-container d-flex flex-wrap">
                 {% for item in clothing_items %}
                     <div class="card">
-                        <a href="{% url 'main:clothing_item_detail' item.slug %}" class="card-on-catalog">
+                        <a href="{% url "main:clothing_item_detail" item.slug %}" class="card-on-catalog">
                             {% if item.image %}
                                 <img src="{{ item.image.url }}" alt="{{ item.name }}" class="product-image">
                             {% endif %}
